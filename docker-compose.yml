@@ -1,0 +1,52 @@
+version: '3.5'
+
+services:
+  frontend:
+    build: .
+    restart: always
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./src/app:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+
+  api:
+    build: ./server
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      MYSQL_DATABASE: ${DATABASE_DBNAME}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      MYSQL_HOST: db
+    volumes:
+      - ./app:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+  db:
+    image: mysql
+    restart: always
+    env_file: .env
+    environment:
+      MYSQL_DATABASE: ${DATABASE_DBNAME}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+  adminer:
+      image: adminer:latest
+      container_name: adminer
+      restart: always
+      environment:
+        ADMINER_DESIGN: nette
+      ports:
+        - "8080:8080"
+volumes:
+  mysql_data:
+  node_modules:
