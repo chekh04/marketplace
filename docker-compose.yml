@@ -7,8 +7,10 @@ services:
     ports:
       - "4200:4200"
     volumes:
-      - ./src/app:/usr/src/app
-      - node_modules:/usr/src/app/node_modules
+      - ./src:/app/src
+      - ./angular.json:/app/angular.json
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./tslint.json:/app/tslint.json
 
   api:
     build: ./server
@@ -26,8 +28,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
       MYSQL_HOST: db
     volumes:
-      - ./app:/usr/src/app
-      - node_modules:/usr/src/app/node_modules
+      - ./server:/app
   db:
     image: mysql
     restart: always
@@ -47,6 +48,7 @@ services:
         ADMINER_DESIGN: nette
       ports:
         - "8080:8080"
+
 volumes:
   mysql_data:
   node_modules:
