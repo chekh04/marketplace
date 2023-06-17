@@ -1,7 +1,8 @@
 <div class="card" style="width: 18rem;">
   <div class="card-body">
-    <h5 class="card-title">{{product.productName}}</h5>
+    <h5 class="card-title">{{product.title}}</h5>
     <p class="card-text">{{product.description}}</p>
-    <a [routerLink]="product.id" class="btn btn-primary">See details</a>
+    <a [routerLink]="'' + product.id" class="btn btn-primary">See details</a>
+    <a (click)="editProduct(product.id)" class="btn btn-primary">Edit</a>
   </div>
 </div>

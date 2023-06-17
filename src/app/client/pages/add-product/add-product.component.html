@@ -19,6 +19,7 @@
              id="price">
       <label for="price">Product price</label>
     </div>
-    <button class="btn btn-sm btn-outline-primary">Add product</button>
+    <button *ngIf="!editMode" class="btn btn-sm btn-outline-primary">Add product</button>
+    <button *ngIf="editMode" (click)="editProduct(form.value)" type="button" class="btn btn-sm btn-outline-primary">Edit product</button>
   </form>
 </div>

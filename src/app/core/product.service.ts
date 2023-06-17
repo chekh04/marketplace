@@ -15,9 +15,15 @@ export class ProductService {
   get products$(): Observable<ProductModel[]> {
     return this.productsSource$.asObservable();
   }
+  public getProductById(id: string): Observable<any> {
+    return this.http.get('http://localhost:3000/get-product-by-id', {params: {id}});
+  }
+  public updateProductById(product: ProductModel): Observable<any> {
+    return this.http.patch('http://localhost:3000/update-product-by-id', product, {responseType: 'text'});
+  }
 
-  public postProduct(product: ProductModel): Observable<any> {
-    return this.http.post('http://localhost:3000/add-product', product, {responseType: 'text'})
+  public postProduct(product: Omit<ProductModel, 'id'>): Observable<any> {
+    return this.http.post('http://localhost:3000/add-product', product, {responseType: 'text'});
   }
 
   public updateProducts(): void{

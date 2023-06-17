@@ -12,9 +12,9 @@ export class ProductsListComponent implements OnInit {
   public readonly products$ = this.productService.products$;
   public product: ProductModel = {
     description: 'sjjsbkdlsdnls',
-    productName: 'sdkbskdbsld',
-    price: '19',
-    id: '323wewlkb32jd'
+    title: 'sdkbskdbsld',
+    price: 19,
+    id: 242323
   }
 
   constructor(private productService: ProductService) {
