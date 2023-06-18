@@ -1,26 +1,25 @@
 const db = require("../utils/db");
 const Product = require('../models/sequelize/product');
 
-exports.getProducts =  (_, res) => {
+exports.getProducts =  (req, res) => {
     // Product.fetchAllProducts().then( data => res.send(data[0]))
-    Product.findAll().then(data => {
-        res.send(data)
-    })
+    // Product.findAll()
+    req.user.getProducts()
+    .then(data => res.send(data));
 }
 
 exports.postProduct = (req, res) => {
     console.log(req.body);
-    // const product = new Product(productName, description, price);
-    // product.saveProduct();
-    Product.create(req.body)
+    req.user.createProduct(req.body)
     .then(() => res.send('OK'))
-    .catch(() => res.statusCode(500)); 
+    // .catch(() => res.statusCode(500)); 
 }
 
 exports.getProductById  = (req, res) => {
     const {id} = req.query;
-    Product.findByPk(id)
-    .then(data => res.send(data));
+    // Product.findByPk(id)
+    req.user.getProducts({where: {id}})
+    .then(data => res.send(data[0]));
 }
 exports.updateProductById = (req, res) => {
     console.log(req.body);
