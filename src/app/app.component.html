@@ -7,3 +7,16 @@
 <img src="/assets/icons/icon-72x72.png" alt="">
 <svg-icon src="/assets/events/birthday.svg"></svg-icon>
 <svg-icon src="assets/events/job-achievement.svg"></svg-icon>
+
+<div>
+    <input
+       placeholder="Type a number"
+       type="number"
+       [ngModel]="value"
+       (ngModelChange)="modelChange($event)"
+    />
+    <small *ngIf="isCalculating">Calculating...</small>
+    <div *ngIf="result != null">
+       {{ result }}...
+    </div>
+ </div>

@@ -7,6 +7,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {HttpClientModule} from "@angular/common/http";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
+    FormsModule,
     AngularSvgIconModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
