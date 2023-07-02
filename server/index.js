@@ -1,45 +1,24 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const productRoutes = require('./routes/product');
+const mongoRoutes = require('./routes/mongo-routes');
 const cors = require('cors');
-const sequelize = require('./utils/db');
 const app = express();
-const Product = require('./models/sequelize/product');
-const User = require('./models/sequelize/user');
+const {mongoConnect} = require('./utils/mongo-db');
 
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.use((req, res, next) => {
-    User.findByPk(1)
-    .then(user => {
-        req.user = user;
-        next();
-    })
-})
 app.use(bodyParser.json())
 app.use(cors());
-
-app.use((req, res, next) => {
-    next();
-});
 
 app.get('/', (req, res) => {
     res.send('Initial page')
 })
 
-app.use(productRoutes);
+app.use(mongoRoutes);
 
-Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'});
-User.hasMany(Product);
-
-sequelize.sync()
-.then(() => User.findByPk(1))
-.then( user => {
-    if (!user) {
-        User.create({name: 'Sasha', email: 'cheh170804@gmail.com'})
-    }
+mongoConnect(() => {
     app.listen(3000, () => {
-        // console.log('Server listening on 3000')
+        console.log('Server listening on 3000')
     })
-}).catch(() => console.log('Connection lost'))
+})
 
